@@ -11,7 +11,7 @@ const sendEmail = async (options) => {
   });
 
   const mailOptions = {
-    from: 'Yurii',
+    from: 'test@mail.to',
     to: options.email,
     subject: options.subject,
     text: options.message,
@@ -20,4 +20,4 @@ const sendEmail = async (options) => {
   await transporter.sendMail(mailOptions);
 };
 
-module.exports = { sendEmail };
+module.exports = sendEmail;
