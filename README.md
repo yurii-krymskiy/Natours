@@ -15,20 +15,6 @@ A RESTful API built with **Node.js**, **Express**, and **MongoDB** that powers a
 - Logging with Morgan  
 - Code linting with ESLint + Prettier  
 
-## 📁 Project Structure
-
-project/
-├── controllers/
-├── models/
-├── routes/
-├── utils/
-├── config/
-├── public/
-├── app.js
-├── server.js
-└── .env
-
-
 ## 📦 Tech Stack
 
 - **Backend**: Node.js, Express  
