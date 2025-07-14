@@ -19,12 +19,12 @@ const reviewSchema = new mongoose.Schema(
     tour: {
       type: mongoose.Schema.ObjectId,
       ref: 'Tour',
-      required: [true, 'Review must belog to a tour.'],
+      required: [true, 'Review must belong to a tour.'],
     },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      required: [true, 'Review must belog to a user.'],
+      required: [true, 'Review must belong to a user.'],
     },
   },
   {
@@ -32,6 +32,8 @@ const reviewSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   },
 );
+
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 reviewSchema.pre(/^find/, function (next) {
   this.populate({
@@ -54,6 +56,7 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
       },
     },
   ]);
+  // console.log(stats);
 
   if (stats.length > 0) {
     await Tour.findByIdAndUpdate(tourId, {
@@ -68,21 +71,23 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
   }
 };
 
-reviewSchema.post('save', function (next) {
+reviewSchema.post('save', function () {
+  // this points to current review
   this.constructor.calcAverageRatings(this.tour);
-  next();
 });
 
+// findByIdAndUpdate
+// findByIdAndDelete
 reviewSchema.pre(/^findOneAnd/, async function (next) {
   this.r = await this.findOne();
+  // console.log(this.r);
   next();
 });
 
 reviewSchema.post(/^findOneAnd/, async function () {
+  // await this.findOne(); does NOT work here, query has already executed
   await this.r.constructor.calcAverageRatings(this.r.tour);
 });
-
-reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 const Review = mongoose.model('Review', reviewSchema);
 
