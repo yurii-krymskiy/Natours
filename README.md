@@ -59,6 +59,7 @@ npm install
 
 🔑 Environment Variables
 Create a .env file in the root:
+
 ```
 NODE_ENV=development
 PORT=3000
@@ -74,6 +75,7 @@ EMAIL_PORT=2525
 STRIPE_SECRET_KEY=yourStripeSecretKey
 STRIPE_WEBHOOK_SECRET=yourStripeWebhookSecret
 ```
+
 ▶️ Usage
 
 ```
@@ -85,25 +87,32 @@ Runs the server with nodemon on http://localhost:3000
 🧪 API Endpoints
 
 Auth
+```
 POST   /api/v1/users/signup
 POST   /api/v1/users/login
 POST   /api/v1/users/forgotPassword
 PATCH  /api/v1/users/resetPassword/:token
+```
 
 Users (Protected)
+```
 GET    /api/v1/users/me
 PATCH  /api/v1/users/updateMe
 PATCH  /api/v1/users/updateMyPassword
 DELETE /api/v1/users/deleteMe
+```
 
 Admin Users
+```
 GET    /api/v1/users
 POST   /api/v1/users
 GET    /api/v1/users/:id
 PATCH  /api/v1/users/:id
 DELETE /api/v1/users/:id
+```
 
 Tours
+```
 GET    /api/v1/tours
 POST   /api/v1/tours
 GET    /api/v1/tours/:id
@@ -115,22 +124,26 @@ GET    /api/v1/tours/tour-stats
 GET    /api/v1/tours/monthly-plan/:year
 GET    /api/v1/tours/tours-within/:distance/center/:latlng/unit/:unit
 GET    /api/v1/tours/distances/:latlng/unit/:unit
+```
 
 Reviews
+```
 GET    /api/v1/tours/:tourId/reviews
 POST   /api/v1/tours/:tourId/reviews
 GET    /api/v1/reviews/:id
 PATCH  /api/v1/reviews/:id
 DELETE /api/v1/reviews/:id
+```
 
 Bookings
+```
 GET    /api/v1/bookings/checkout-session/:tourId
 GET    /api/v1/bookings
 POST   /api/v1/bookings
 GET    /api/v1/bookings/:id
 PATCH  /api/v1/bookings/:id
 DELETE /api/v1/bookings/:id
-
+```
 ✍️ Author
 
 Made by Yurii
