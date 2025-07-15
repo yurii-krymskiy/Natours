@@ -76,15 +76,15 @@ exports.getAll = (Model) =>
       .sort()
       .limitFields()
       .paginate();
-    // const doc = await features.query.explain();
-    const doc = await features.query;
+    // const doc = await features.mongooseQuery.explain();
+    const documents = await features.mongooseQuery;
 
     // SEND RESPONSE
     res.status(200).json({
       status: 'success',
-      results: doc.length,
+      results: documents.length,
       data: {
-        data: doc,
+        data: documents,
       },
     });
   });
