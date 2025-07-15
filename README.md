@@ -1,85 +1,145 @@
-# Natours
 # 🧭 Natours API
 
-A RESTful API built with **Node.js**, **Express**, and **MongoDB** that powers a tours booking service. It includes user authentication, tour management, and booking capabilities.
-
-## 🚀 Features
-
-- User registration and login with JWT  
-- User profile update and management  
-- CRUD operations for tours  
-- Tour booking system  
-- Email notifications using Nodemailer  
-- Input validation and data sanitization  
-- Environment-based config with `.env`  
-- Logging with Morgan  
-- Code linting with ESLint + Prettier  
+A full-featured RESTful API for a travel booking platform, built with **Node.js**, **Express**, **MongoDB**, and **Stripe**. It supports user authentication, role-based authorization, image uploads, advanced filtering/sorting, reviews, payments, and more.
 
 ## 📦 Tech Stack
 
-- **Backend**: Node.js, Express  
-- **Database**: MongoDB + Mongoose  
-- **Authentication**: JWT, bcryptjs  
-- **Validation**: validator  
-- **Dev Tools**: ESLint (Airbnb), Prettier, Nodemon  
+- **Node.js** + **Express**
+- **MongoDB** + **Mongoose**
+- **Stripe** for payments
+- **JWT Authentication**
+- **Multer** + **Sharp** for file uploads and image processing
+- **Security**: Helmet, Rate limiting, Data sanitization (NoSQL & XSS)
+- **Linting/Formatting**: ESLint (Airbnb) + Prettier
+
+---
+
+## 🚀 Features
+
+### 🔐 Authentication & Authorization
+
+- Signup / Login / Logout
+- Password reset via email
+- Role-based access (admin, lead-guide, guide, user)
+
+### 🧑 Users
+
+- Get/update/delete user profile
+- Upload and resize profile photo
+- Admin-only user management
+
+### 🌍 Tours
+
+- CRUD operations on tours
+- Image uploads for tour cover and gallery
+- Filtering, sorting, pagination
+- Geospatial queries (`tours-within`, `distances`)
+- Monthly plans & stats (admin & guides)
+
+### ⭐ Reviews
+
+- Users can review tours
+- Only authenticated users can write/edit/delete their reviews
+
+### 💳 Bookings & Payments
+
+- Stripe Checkout integration
+- Secure backend booking creation
+- Booking management (admin only)
+
+---
 
 ## 🛠️ Installation
 
-1. **Clone the repository**
+```bash
 git clone https://github.com/yurii-krymskiy/Natours.git
-cd Natours
-
-
-2. **Install dependencies**
+cd project-1
 npm install
+```
 
+🔑 Environment Variables
+Create a .env file in the root:
 
-3. **Create a `.env` file**
 NODE_ENV=development
 PORT=3000
-DATABASE=<your-mongodb-connection-string>
-DATABASE_PASSWORD=<your-password>
-JWT_SECRET=your_jwt_secret
+DATABASE=mongodb+srv://...
+DATABASE_PASSWORD=yourMongoPassword
+JWT_SECRET=yourJWTSecret
 JWT_EXPIRES_IN=90d
+JWT_COOKIE_EXPIRES_IN=90
+EMAIL_USERNAME=yourEmailUser
+EMAIL_PASSWORD=yourEmailPass
+EMAIL_HOST=smtp.mailtrap.io
+EMAIL_PORT=2525
+STRIPE_SECRET_KEY=yourStripeSecretKey
+STRIPE_WEBHOOK_SECRET=yourStripeWebhookSecret
 
+▶️ Usage
 
-4. **Start the server**
+```
+npm run start:dev
+```
 
-- Development:
-  ```
-  npm run start:dev
-  ```
+Runs the server with nodemon on http://localhost:3000
 
-- Production:
-  ```
-  npm run start:prod
-  ```
+🧪 API Endpoints
 
-## 🧪 API Endpoints Overview
+Auth
+POST   /api/v1/users/signup
+POST   /api/v1/users/login
+POST   /api/v1/users/forgotPassword
+PATCH  /api/v1/users/resetPassword/:token
 
-### 👤 Users
-- `POST /api/v1/users/signup` – Register new user  
-- `POST /api/v1/users/login` – User login  
+Users (Protected)
+GET    /api/v1/users/me
+PATCH  /api/v1/users/updateMe
+PATCH  /api/v1/users/updateMyPassword
+DELETE /api/v1/users/deleteMe
 
-### 🧳 Tours
-- `GET /api/v1/tours` – Get all tours  
-- `POST /api/v1/tours` – Create new tour  
-- `GET /api/v1/tours/:id` – Get tour by ID  
-- `PATCH /api/v1/tours/:id` – Update tour  
-- `DELETE /api/v1/tours/:id` – Delete tour  
+Admin Users
+GET    /api/v1/users
+POST   /api/v1/users
+GET    /api/v1/users/:id
+PATCH  /api/v1/users/:id
+DELETE /api/v1/users/:id
 
-> Full API documentation coming soon (Postman or Swagger)
+Tours
+GET    /api/v1/tours
+POST   /api/v1/tours
+GET    /api/v1/tours/:id
+PATCH  /api/v1/tours/:id
+DELETE /api/v1/tours/:id
 
-## 🧹 Code Style
+GET    /api/v1/tours/top-5-cheap
+GET    /api/v1/tours/tour-stats
+GET    /api/v1/tours/monthly-plan/:year
+GET    /api/v1/tours/tours-within/:distance/center/:latlng/unit/:unit
+GET    /api/v1/tours/distances/:latlng/unit/:unit
 
-- [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)  
-- Integrated with ESLint + Prettier  
+Reviews
+GET    /api/v1/tours/:tourId/reviews
+POST   /api/v1/tours/:tourId/reviews
+GET    /api/v1/reviews/:id
+PATCH  /api/v1/reviews/:id
+DELETE /api/v1/reviews/:id
 
-## 👨‍💻 Author
+Bookings
+GET    /api/v1/bookings/checkout-session/:tourId
+GET    /api/v1/bookings
+POST   /api/v1/bookings
+GET    /api/v1/bookings/:id
+PATCH  /api/v1/bookings/:id
+DELETE /api/v1/bookings/:id
 
-**Yurii Krymskiy**  
-GitHub: [@yurii-krymskiy](https://github.com/yurii-krymskiy)
+✍️ Author
 
-## 📜 License
+Made by Yurii
 
-Licensed under the [ISC License](LICENSE).
+🧼 Lint & Format
+
+npm run lint      # using ESLint (Airbnb config)
+npm run format    # using Prettier
+
+⚠️ License
+
+This project is licensed under the ISC License.
