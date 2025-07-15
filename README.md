@@ -59,7 +59,7 @@ npm install
 
 🔑 Environment Variables
 Create a .env file in the root:
-
+```
 NODE_ENV=development
 PORT=3000
 DATABASE=mongodb+srv://...
@@ -73,7 +73,7 @@ EMAIL_HOST=smtp.mailtrap.io
 EMAIL_PORT=2525
 STRIPE_SECRET_KEY=yourStripeSecretKey
 STRIPE_WEBHOOK_SECRET=yourStripeWebhookSecret
-
+```
 ▶️ Usage
 
 ```
